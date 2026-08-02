@@ -1,0 +1,2182 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>月初・SF・法人案件・社内利用マニュアル</title>
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f5ff',
+                            100: '#e0eafd',
+                            200: '#c8daf9',
+                            300: '#a3c1f4',
+                            400: '#759deb',
+                            500: '#4e77df',
+                            600: '#3957ce',
+                            700: '#2e43ba',
+                            800: '#2c3997',
+                            900: '#273278',
+                            950: '#1a1f49',
+                        },
+                        accent: {
+                            DEFAULT: '#2563eb', /* Cobalt Blue */
+                            hover: '#1d4ed8',
+                            light: '#eff6ff',
+                            dark: '#1e3a8a',
+                            gold: '#eab308', /* Saffron Gold */
+                            goldLight: '#fef9c3'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Inter"', '"Noto Sans JP"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* スムーズなトランジション設定 */
+        .theme-transition {
+            transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                        border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                        text-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* スクロールバーのカスタマイズ */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 99px;
+        }
+        
+        /* 印刷設定 */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+            }
+            nav, header, #search-container, #theme-toggle, .print-btn, #mobile-nav-toggle, #img-modal {
+                display: none !important;
+                height: 0 !important;
+                width: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            main {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+            }
+            .lesson-card {
+                display: none !important;
+            }
+            .lesson-card.printing {
+                display: block !important;
+                border: none !important;
+                box-shadow: none !important;
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                page-break-inside: avoid;
+            }
+            table {
+                width: 100% !important;
+                border-collapse: collapse !important;
+                margin-top: 15px !important;
+            }
+            th, td {
+                border: 1px solid #94a3b8 !important;
+                padding: 12px 16px !important;
+                color: #000000 !important;
+                background: transparent !important;
+            }
+            th {
+                background-color: #f8fafc !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .img-container {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#f8fafc] dark:bg-[#090d16] text-[#334155] dark:text-[#cbd5e1] min-h-screen flex flex-col lg:flex-row font-sans theme-transition antialiased">
+
+    <!-- ZOOM MODAL OVERLAY (ローカル画像拡大表示用) -->
+    <div id="img-modal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md flex justify-center items-center z-[9999] opacity-0 pointer-events-none transition-opacity duration-300 cursor-zoom-out">
+        <span class="absolute top-6 right-8 text-white/70 hover:text-white text-4xl font-light select-none transition-colors duration-150">&times;</span>
+        <div id="modal-content" class="max-w-[95vw] max-h-[90vh] rounded-2xl overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 bg-white dark:bg-slate-900 p-2 border border-white/10">
+            <!-- JavaScriptで画像タグが挿入されます -->
+        </div>
+    </div>
+
+    <!-- モバイル用ヘッダー & ナビゲーションバー -->
+    <div class="lg:hidden w-full bg-[#0d1527] text-white p-4 flex justify-between items-center sticky top-0 z-50 shadow-md">
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+                <i data-lucide="book-open" class="text-white w-4 h-4"></i>
+            </div>
+            <span class="font-bold tracking-wider text-sm">サンライフホテル 業務マニュアル</span>
+        </div>
+        <button id="mobile-nav-toggle" class="p-2 text-slate-300 hover:text-white focus:outline-none transition-colors" aria-label="メニューを開く">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+    </div>
+
+    <!-- SIDEBAR - NAVIGATOR -->
+    <nav id="sidebar" class="fixed lg:sticky top-0 left-0 w-80 h-full lg:h-screen bg-[#0d1527] text-slate-200 flex flex-col justify-between p-6 z-40 shadow-2xl overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="space-y-6">
+            <!-- ロゴエリア -->
+            <div class="flex items-center justify-between border-b border-slate-800 pb-5">
+                <div class="flex items-center gap-3">
+                    <div class="p-2.5 bg-blue-600/10 rounded-xl border border-blue-500/20">
+                        <i data-lucide="shield-check" class="text-blue-500 w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-bold text-slate-100 text-sm tracking-wide leading-tight">サンライフホテル</h2>
+                        <span class="text-[11px] text-slate-400 font-semibold uppercase tracking-wider block mt-0.5">Operation Portal</span>
+                    </div>
+                </div>
+                <!-- モバイル用閉じるボタン -->
+                <button id="mobile-nav-close" class="lg:hidden text-slate-400 hover:text-white p-1 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- アコーディオンメニュー -->
+            <div class="space-y-3" id="sidebar-menu-list">
+                
+                <!-- カテゴリ1 -->
+                <details class="group/menu" open>
+                    <summary class="list-none flex justify-between items-center p-3 hover:bg-slate-800/40 rounded-xl cursor-pointer transition-all border border-transparent hover:border-slate-800">
+                        <span class="flex items-center gap-3 text-xs font-bold tracking-wider text-slate-300 uppercase">
+                            <i data-lucide="calendar" class="w-4 h-4 text-blue-500"></i>
+                            月初提出書類準備
+                        </span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200 group-open/menu:rotate-90"></i>
+                    </summary>
+                    <div class="mt-2 ml-3 pl-3 border-l border-slate-800 flex flex-col space-y-1">
+                        <a href="#lesson1-1" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">1-1. ゆうパックの準備</a>
+                        <a href="#lesson1-2" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">1-2. 現金出納帳</a>
+                        <a href="#lesson1-3" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">1-3. SF現金出納帳締め</a>
+                        <a href="#lesson1-4" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">1-4. 領収書処理</a>
+                        <a href="#lesson1-5" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">1-5. 株主優待券</a>
+                    </div>
+                </details>
+
+                <!-- カテゴリ2 (元の各種集計と格納を2番目に復帰) -->
+                <details class="group/menu">
+                    <summary class="list-none flex justify-between items-center p-3 hover:bg-slate-800/40 rounded-xl cursor-pointer transition-all border border-transparent hover:border-slate-800">
+                        <span class="flex items-center gap-3 text-xs font-bold tracking-wider text-slate-300 uppercase">
+                            <i data-lucide="folder-archive" class="w-4 h-4 text-blue-500"></i>
+                            各種集計と格納
+                        </span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200 group-open/menu:rotate-90"></i>
+                    </summary>
+                    <div class="mt-2 ml-3 pl-3 border-l border-slate-800 flex flex-col space-y-1">
+                        <a href="#lesson2-1" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">2-1. 科目別集計表の格納</a>
+                        <a href="#lesson2-2" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">2-2. 売掛内容確認と格納</a>
+                        <a href="#lesson2-3" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">2-3. 社員利用実績の確認</a>
+                        <a href="#lesson2-4" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">2-4. 宿泊税報告書</a>
+                    </div>
+                </details>
+
+                <!-- カテゴリ3 (元のプラン・料金設定を3番目に復帰) -->
+                <details class="group/menu">
+                    <summary class="list-none flex justify-between items-center p-3 hover:bg-slate-800/40 rounded-xl cursor-pointer transition-all border border-transparent hover:border-slate-800">
+                        <span class="flex items-center gap-3 text-xs font-bold tracking-wider text-slate-300 uppercase">
+                            <i data-lucide="trending-up" class="w-4 h-4 text-blue-500"></i>
+                            プラン・料金設定
+                        </span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200 group-open/menu:rotate-90"></i>
+                    </summary>
+                    <div class="mt-2 ml-3 pl-3 border-l border-slate-800 flex flex-col space-y-1">
+                        <a href="#lesson3-1" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">3-1. プラン延長作業</a>
+                        <a href="#lesson3-2" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">3-2. TLリンカーンプラン延長</a>
+                        <a href="#lesson3-3" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">3-3. TLリンカーン料金流し</a>
+                        <a href="#lesson3-4" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">3-4. 新月ランキング登録</a>
+                    </div>
+                </details>
+
+                <!-- カテゴリ4 (Lesson 4 月次請求・宿泊税報告を4番目の位置に配置) -->
+                <details class="group/menu">
+                    <summary class="list-none flex justify-between items-center p-3 hover:bg-slate-800/40 rounded-xl cursor-pointer transition-all border border-transparent hover:border-slate-800">
+                        <span class="flex items-center gap-3 text-xs font-bold tracking-wider text-slate-300 uppercase">
+                            <i data-lucide="clipboard-list" class="w-4 h-4 text-blue-500"></i>
+                            月次請求・宿泊税報告
+                        </span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200 group-open/menu:rotate-90"></i>
+                    </summary>
+                    <div class="mt-2 ml-3 pl-3 border-l border-slate-800 flex flex-col space-y-1">
+                        <a href="#lesson4-1" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">4-1. 水・ガス代請求書</a>
+                        <a href="#lesson4-2" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">4-2. 楽天トラベル宿泊税報告</a>
+                        <a href="#lesson4-3" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">4-3. Lawsonお買物券支払明細</a>
+                    </div>
+                </details>
+
+                <!-- カテゴリ5 (Salesforce操作) -->
+                <details class="group/menu">
+                    <summary class="list-none flex justify-between items-center p-3 hover:bg-slate-800/40 rounded-xl cursor-pointer transition-all border border-transparent hover:border-slate-800">
+                        <span class="flex items-center gap-3 text-xs font-bold tracking-wider text-slate-300 uppercase">
+                            <i data-lucide="database" class="w-4 h-4 text-blue-500"></i>
+                            Salesforce 操作
+                        </span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200 group-open/menu:rotate-90"></i>
+                    </summary>
+                    <div class="mt-2 ml-3 pl-3 border-l border-slate-800 flex flex-col space-y-1">
+                        <a href="#lesson5-1" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">5-1. SF キャンセルポリシー</a>
+                        <a href="#lesson5-2" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">5-2. SF新規売上登録</a>
+                        <a href="#lesson5-3" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">5-3. SFコミッションの登録</a>
+                        <a href="#lesson5-4" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">5-4. 新規顧客・担当者登録</a>
+                        <a href="#lesson5-5" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">5-5. 案件作成・売上登録</a>
+                        <a href="#lesson5-6" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">5-6. 売上内容の変更・取消</a>
+                        <a href="#lesson5-7" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">5-7. 見積書の発行方法</a>
+                    </div>
+                </details>
+
+                <!-- カテゴリ6 (HANA TOURを6-3に統合) -->
+                <details class="group/menu">
+                    <summary class="list-none flex justify-between items-center p-3 hover:bg-slate-800/40 rounded-xl cursor-pointer transition-all border border-transparent hover:border-slate-800">
+                        <span class="flex items-center gap-3 text-xs font-bold tracking-wider text-slate-300 uppercase">
+                            <i data-lucide="building-2" class="w-4 h-4 text-blue-500"></i>
+                            法人案件・社内利用
+                        </span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200 group-open/menu:rotate-90"></i>
+                    </summary>
+                    <div class="mt-2 ml-3 pl-3 border-l border-slate-800 flex flex-col space-y-1">
+                        <a href="#lesson6-1" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">6-1. 社内利用の手続き</a>
+                        <a href="#lesson6-2" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">6-2. 法人案件の手続き</a>
+                        <a href="#lesson6-3" class="menu-link block py-2 px-3 text-xs text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800/30 transition-all border-l-2 border-transparent hover:border-blue-500">6-3. 株式会社HANA TOUR</a>
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <!-- フッターエリア -->
+        <div class="mt-8 pt-5 border-t border-slate-800 text-center">
+            <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest block">Confidential Document</span>
+            <p class="text-[11px] text-slate-400 mt-1">TKP Sunlife Hotel Manual Portal</p>
+        </div>
+    </nav>
+
+    <!-- モバイル背景カバー -->
+    <div id="mobile-sidebar-overlay" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-30 hidden lg:hidden"></div>
+
+    <!-- MAIN PANEL LAYOUT -->
+    <main class="flex-1 px-4 py-8 md:px-12 md:py-12 lg:px-16 lg:py-16 overflow-y-auto space-y-8 max-w-6xl mx-auto w-full">
+        
+        <!-- HEADER CONTROLS (検索・テーマ切り替え) -->
+        <div id="search-container" class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-slate-900 p-4 md:p-6 rounded-2xl shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800/70 theme-transition">
+            <!-- インクリメンタル検索窓 -->
+            <div class="relative flex-1">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 dark:text-slate-500"></i>
+                <input type="text" id="manual-search" placeholder="マニュアルを検索（例：売掛, 現金, 領収書）..." class="w-full pl-12 pr-10 py-3.5 bg-slate-50/50 dark:bg-slate-950/40 border border-slate-200/80 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 dark:focus:border-blue-500 theme-transition text-[#1e293b] dark:text-[#f1f5f9]">
+                <button id="search-clear" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hidden">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            
+            <div class="flex items-center gap-3 self-end md:self-auto">
+                <span id="search-count" class="text-xs font-semibold text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-950 px-3.5 py-2.5 rounded-xl border border-slate-100 dark:border-slate-800/40">
+                    全 <span id="total-card-count">21</span> 項目
+                </span>
+                <!-- テーマ切り替えトグル -->
+                <button id="theme-toggle" class="p-3 bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-all border border-slate-200/50 dark:border-slate-800/60" aria-label="テーマ切り替え">
+                    <i data-lucide="sun" class="w-5 h-5 dark:hidden"></i>
+                    <i data-lucide="moon" class="w-5 h-5 hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- PREMIUM WELCOME HEADER -->
+        <div class="page-header bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-[0_2px_12px_-3px_rgba(0,0,0,0.04)] border-l-[6px] border-blue-600 dark:border-blue-500 border border-slate-100 dark:border-slate-800/70 relative overflow-hidden theme-transition">
+            <div class="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-blue-600/5 to-transparent pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        サンライフホテル 総合業務マニュアル
+                    </h1>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-2 leading-relaxed">
+                        月初提出書類、Salesforce操作、および法人案件・社内利用の手続きを網羅した公式マニュアルです。
+                    </p>
+                </div>
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 rounded-xl text-red-600 dark:text-red-400 font-bold text-xs self-start md:self-center">
+                    <i data-lucide="alert-triangle" class="w-4.5 h-4.5"></i>
+                    社外秘・外部への公開厳禁
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== CATEGORY 1: 月初提出書類準備 ==================== -->
+        
+        <!-- 1-1. ゆうパックの準備 -->
+        <section id="lesson1-1" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">1-1</span>
+                    ゆうパック：送付の基本準備
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson1-1')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-950/20 font-semibold text-slate-600 dark:text-slate-400">送付・格納先</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 font-medium">ゆうパック (郵便局/コンビニ)</td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">内容</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 font-medium">ゆうパックに住所記入・書類の梱包</td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">詳細ルート</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                <div class="space-y-1">
+                                    <p><strong>送り先：</strong> 本社品質管理課</p>
+                                    <p><strong>〒：</strong> <span class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded font-mono font-bold text-xs">162-0844</span></p>
+                                    <p class="text-slate-800 dark:text-slate-200 font-medium">東京都新宿区市谷八幡町8番地 TKP市ヶ谷ビル2階<br>株式会社ティーケーピー 宿泊事業部＆ホスピタリティマネジメント部</p>
+                                    <p><strong>連絡先：</strong> <span class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded font-mono font-bold text-xs">03-4288-8352</span></p>
+                                </div>
+                                <div class="mt-4 inline-flex items-center gap-2 text-xs text-blue-600 dark:text-blue-400 font-bold bg-blue-50/70 dark:bg-blue-955/40 px-3.5 py-2 rounded-xl border border-blue-100/50 dark:border-blue-900/30">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                                    ＊品名に必ず【月末書類】と記入すること！
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/yupack_sample.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1-2. 現金出納帳 -->
+        <section id="lesson1-2" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">1-2</span>
+                    現金出納（小口, 現金入金, 領収書）
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson1-2')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm font-bold text-slate-500 dark:text-slate-400 mb-5 flex items-center gap-2">
+                <i data-lucide="info" class="w-4 h-4 text-blue-500"></i> 【業務手順】
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-950/20 font-semibold text-slate-600 dark:text-slate-400">① Teamsよりコピー</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300">
+                                Teamsの現金出納帳からコピーします。<br>
+                                <small class="text-xs text-slate-400 font-mono block mt-1">【宿泊事業部】→【一般】→【16.サンライフホテル】→【00.実査】</small>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-950/20 font-semibold text-slate-600 dark:text-slate-400">② Excel内容を修正</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300">
+                                当月分のExcel内容を修正します。<br>
+                                ・『【SF移動期間中】TKPサンライフ実査・売上報告』の月末数値を照合。<br>
+                                <span class="bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded font-bold text-xs mt-1 inline-block">※ 実査日は必ず月末日を入れる。</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-950/20 font-semibold text-slate-600 dark:text-slate-400">③ 印刷・押印</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300">
+                                印刷して、右の上段にハンコを押します。<br>
+                                <span class="bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 px-2 py-0.5 rounded font-bold text-xs mt-1 inline-block">※ 必ず2名の検印が必要です。</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/teams_excel_setup.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/teams_excel_setup2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/teams_excel_setup3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1-3. SF現金出納帳締め -->
+        <section id="lesson1-3" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">1-3</span>
+                    SF現金出納帳締め
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson1-3')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-950/20 font-semibold text-slate-600 dark:text-slate-400">業務内容</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 font-medium">Salesforce内での現金出納帳締め作業、および月末確定分の印刷</td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">操作手順</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>Salesforceへログイン</strong></p>
+                                <p>❷ 【部門マスター】 → 【宿泊事業九州事業課ＴＫＰサンライフホテル】 → 【現金出納帳締め】を選択</p>
+                                <p>❸ 現金出納帳名の一覧から、対象月の月末締めデータ <span class="bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded font-mono font-bold text-xs">(202x/xx/30、または31)</span> を開く</p>
+                                <p>❹ 画面右上のボタンをクリックし、印刷プレビュー画面より対象の帳票を印刷する</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/sf_cash_closing.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/sf_cash_closing2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/sf_cash_closing3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/sf_cash_closing4.jpg" alt="画像4" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1-4. 領収書処理とシステムの照合 -->
+        <section id="lesson1-4" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">1-4</span>
+                    領収書処理とシステムの照合
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson1-4')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① システム登録の確認</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                <p>Salesforce（SF）の登録内容が現金出納帳通りになっているかを確認します。</p>
+                                <div class="mt-2 space-y-1 pl-4 border-l-2 border-slate-200 dark:border-slate-850">
+                                    <p><strong>【確認方法】</strong></p>
+                                    <p>❶ <strong>データ抽出：</strong> SF → 【レポート】 → 【現金出納帳】 → 【現金出納帳支出リスト】を選択し、データをエクスポート（Export）する。</p>
+                                    <p>❷ <strong>Excel操作：</strong> ファイルを開き、以下の条件でフィルターを適用する。</p>
+                                    <p class="pl-4 text-xs font-mono text-slate-500 dark:text-slate-400">
+                                        ・店舗名：<strong>【サンライフホテル】</strong><br>
+                                        ・支出内容_小区分：<strong>【-銀行へ預入】を除外</strong><br>
+                                        ・日付：<strong>【該当月】</strong>（xx月に合わせる）
+                                    </p>
+                                    <p>❸ <strong>照合：</strong> フィルタ後のリストを印刷し、実際の金額と照らし合わせる。</p>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 現物領収書の整理</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ❶ <strong>貼付：</strong> 現物の領収書を、上記①で抽出・印刷したリストの順番通りにノリで貼り付ける。<br>
+                                <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-bold text-xs mt-2 inline-block">※重要：宛名に【株式会社TKP】が必ず記入されていることを目視確認すること！</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ 提出用表紙の作成</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ❶ <strong>表紙印刷：</strong> 該当月に合わせて「領収書提出用表紙」を印刷する。<br>
+                                <p class="mt-1"><strong class="text-xs text-slate-400 font-mono">【格納先】</strong></p>
+                                <span class="text-xs text-slate-500 dark:text-slate-400 font-mono block bg-slate-50 dark:bg-slate-955 p-2 rounded-xl mt-1 border border-slate-200/40 dark:border-slate-800">
+                                    【宿泊事業部】 → 【一般】 → 【16.サンライフホテル】 → 【00.実査】 → 【領収書提出用表紙エクセル】
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/receipt_check.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/receipt_check2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/receipt_check3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/receipt_check4.jpg" alt="画像4" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/receipt_check5.jpg" alt="画像5" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/receipt_check6.jpg" alt="画像6" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1-5. 株主優待券の処理 -->
+        <section id="lesson1-5" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">1-5</span>
+                    株主優待券の処理
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson1-5')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                株主優待券を利用した案件がある場合、必ず現物と照らし合わせて枚数を確認します。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① 利用確認の手順</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>システム照会：</strong> 【ホテルシステム】 → 【利用者ログイン】(ID&PW:20001) → 【売掛伝票照会】 → 【種別：クーポン】 → 【請求先CD：30000001】を選択。</p>
+                                <p>❷ <strong>内容照合：</strong> 内容を確認後、事務室にあるリストと相違がないか確認する。</p>
+                                <p>❸ <strong>データ記録：</strong> 株主優待券利用Excelに記入し、Teamsに保存する。</p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 格納および報告</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>Teams格納：</strong> 【Private-経理部】 → 【team-宿泊事業部＆ホスピタリティマネジメント部⇔経理部ファイル】 → 【team-宿泊事業部⇔経理部】 → 【200674サンライフホテル】 → 【xx期】 → 【該当月】にデータを格納する。</p>
+                                <p>❷ <strong>メール報告：</strong> 総務; shigeki machida宛にメールを送信する。</p>
+                                <p class="text-xs text-slate-400">（CC：庄子、古賀、金、ティサラ、ギハン）</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">送付方法</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 font-medium">ゆうパック（株主優待券）として送付する。</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/shareholder_benefit.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/shareholder_benefit2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CATEGORY 2: 各種集計と格納 (2番目に復帰) ==================== -->
+        
+        <!-- 2-1. 科目別集計表の格納 -->
+        <section id="lesson2-1" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">2-1</span>
+                    科目別集計表の格納（Teams・ダイレクトクラウド）
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson2-1')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                月次の科目別集計表を、Teamsおよびダイレクトクラウドの指定フォルダへ格納します。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① Teamsへの格納</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ❶ <strong>保存パス：</strong> 以下のディレクトリにファイルを添付する。<br>
+                                <span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">【Private経理部】 → 【team-宿泊事業部＆ホスピタリティマネジメント部⇔経理部ファイル】 → 【team-宿泊事業部⇔経理部】 → 【200674TKPサンライフ】 → 【xx期】 → 【26xx】</span>
+                                ❷ <strong>ファイル名：</strong> 「【科目別集計表】サンライフxx月」として保存する。
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② ダイレクトクラウドへの格納</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ❶ <strong>保存パス：</strong> 以下のディレクトリへ格納する。<br>
+                                <span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">【ダイレクトクラウド】→【共有】→【経理部⇔宿泊事業部】→【月次決算】→【宿泊事業部-経理部ファイル】→【科目別集宿泊売上実績】</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/itemized_summary.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/itemized_summary2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/itemized_summary3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2-2. 売掛内容確認と格納 -->
+        <section id="lesson2-2" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">2-2</span>
+                    売掛内容確認と格納
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson2-2')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                ホテルシステムでの売掛一括更新、データの抽出、および指定フォルダへの格納作業を行います。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① 売掛内容の確認と更新</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                <p>❶ <strong>一括更新処理：</strong><br>【ホテルシステム】 → 【利用者ログイン】 → 【ID&PW:20001】 → 【売掛管理】 → 【売掛登録】 → 【処理モード：一括】 → 【発生日：末日】 → 【種別：1個ずつ選択：全部】 → 【検索】 → 【選択して更新】を実行。<br><small class="text-xs text-slate-400">※該当月全日、種別全部で検索結果が出なければ処理済みです。</small></p>
+                                <p class="mt-2">❷ <strong>データ抽出：</strong><br>【売掛伝票照会】にて該当月1日～末日を「一般売掛～全部個々」でExcel出力。<br><strong>【必須抽出項目】</strong><br>1) 発生日、2)利用開始日、3)利用終了日、4)予約No、5)請求先名称漢字、6)請求先名称カナ、7)売掛金額、8)予約者名漢字、9)予約者名カナ、10)利用者名漢字、11)利用者名カナ</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② データ格納先 (Teams/クラウド)</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>Teamsへの格納：</strong><br><span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800">【Private-経理部】 → 【team-宿泊事業部＆ホスピタリティマネジメント部⇔経理部ファイル】 → 【team-宿泊事業部⇔経理部】 → 【200674サンライフホテル】 → 【xx期】 → 【該当月】</span>へ、先月分を参考にして新たなフォルダを作成し記入。</p>
+                                <p>❷ <strong>ダイレクトクラウドへの格納：</strong><br><span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800">【ダイレクトクラウド】→【共有】→【経理部⇔宿泊事業部】→【月次決算】→【宿泊事業部-経理部ファイル】→【06.売掛金内訳（csv）】</span></p>
+                                <p>❸ <strong>NCRフォルダへの格納：</strong><br><span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800">【スキャンフォルダ】→【売掛】</span></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ar_confirmation.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ar_confirmation2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ar_confirmation3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ar_confirmation4.jpg" alt="画像4" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2-3. 社員利用実績の確認 -->
+        <section id="lesson2-3" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">2-3</span>
+                    社員利用実績の確認
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson2-3')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                社員による施設利用の実績を照会し、Excelへの記録、スキャン保存、および総務への報告を行います。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① 社員利用の照会手順</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>システムログイン：</strong> 【ホテルシステム】 → 【利用者ログイン】 → 【ID&PW:20001】を入力。</p>
+                                <p>❷ <strong>条件指定：</strong> 【売掛伝票照会】 → 【種別：一般売掛】 → 【請求先CD：32】(TKP利用) を選択して照会する。</p>
+                                <p>❸ <strong>データ記録：</strong> 内容を確認後、Teams内の指定Excelに詳細を記入する。</p>
+                                <p>❹ <strong>押印・保存：</strong> Excelを印刷してハンコ（検印）を押し、PDFにスキャンする。その後、ExcelとPDFの両方をTeamsに保存する。</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 格納先およびメール報告</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                                <p>❶ <strong>Teams格納：</strong> 以下のパスにデータを保存する。<br><span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">【Private-経理部】 → 【team-宿泊事業部＆ホスピタリティマネジメント部⇔経理部ファイル】 → 【team-宿泊事業部⇔経理部】 → 【200674サンライフホテル】 → 【xx期】 → 【該当月】</span></p>
+                                <p>❷ <strong>ダイレクトクラウドへの格納：</strong><br><span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-950 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">【ダイレクトクラウド】→【共有】→【経理部⇔宿泊事業部】→【月次決算】→【宿泊事業部-経理部ファイル】→【12．社員宿泊実績】</span></p>
+                                <p>❸ <strong>報告メール：</strong> <strong>総務課長（MACHIDA SHIGEAKIさん）</strong>宛に完了報告メールを送信する。<br><span class="text-xs text-slate-400 block mt-1">（CC：庄子、古賀、金、ティサラ、ギハン）</span></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/employee_usage.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/employee_usage2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/employee_usage3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2-4. 宿泊税報告書 -->
+        <section id="lesson2-4" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">2-4</span>
+                    宿泊税報告書
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson2-4')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                ホテルシステムから宿泊税データを抽出し、合計金額の算出・照合を行った上で、Teamsの指定フォルダへ格納します。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① 宿泊税報告書の出力と計算手順</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>PDF出力：</strong> 【ホテルシステム】 → 【帳票】 → 【宿泊税報告書】へ進み、PDF形式にてデータを出力します。</p>
+                                <p>❷ <strong>Excel出力と計算：</strong> 同じデータをExcel形式でも出力し、シート上で合計金額を計算して入力します。</p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② フロント日報との金額照合（不一致時の対応）</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>データの比較確認：</strong> フロント日報と宿泊税報告書のデータを比較し、マイナスや合計金額のズレがないか必ず確認します。</p>
+                                <p>❷ <strong>不一致（連れ）が発生した場合：</strong><br>ホテルシステム（グロービア）の【フロント日報】を開き、月累計枠の「その他税」と「当月」の数値を一から見比べて確認します。<br>差異が見つかった場合は、<strong>宿泊税報告書エクセル側を正しい数値に修正（補正）した上で報告</strong>を行ってください。</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ Teams/ダイレクトクラウドへのデータ格納先パス</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>保存対象：</strong> 上記で作成・修正した「❶ PDFファイル」と「❷ Excelファイル」の両方を手元に用意します。</p>
+                                <p>❷ <strong>格納ルート：</strong> 以下のディレクトリを正確に辿り、該当月フォルダ内へ格納（アップロード）を完了させてください。<br><span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-955 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">【Private-経理部】 → 【team-宿泊事業部＆ホスピタリティマネジメント部⇔経理部ファイル】 → 【team-宿泊事業部⇔経理部】 → 【200674サンライフホテル】 → 【xx期】 → 【該当月】</span></p>
+                                <p>❸ <strong>ダイレクトクラウドへの格納：</strong><br><span class="text-xs text-blue-600 dark:text-blue-400 font-mono block bg-slate-50 dark:bg-slate-955 p-2 rounded-xl border border-slate-100 dark:border-slate-800 mt-1">【ダイレクトクラウド】→【共有】→【経理部⇔宿泊事業部】→【月次決算】→【宿泊事業部-経理部ファイル】→【14．宿泊課税一覧表(csv・PDF)】</span></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/accommodation_tax.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/accommodation_tax2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/accommodation_tax3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CATEGORY 3: プラン・料金設定 (3番目に復帰) ==================== -->
+        
+        <!-- 3-1. プラン延長作業（サイトコントローラー操作） -->
+        <section id="lesson3-1" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">3-1</span>
+                    プラン延長作業（サイトコントローラー操作）
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson3-1')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                予約サイトの掲載期間を延長する際に行う一連のシステム操作手順です。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① プラン延長時に行う作業</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                以下の3つの作業をセットで実施します：<br>
+                                ❶ <strong>サイトのプラン延長：</strong> 各予約サイトの管理画面にて販売期間の延長設定を行う。<br>
+                                ❷ <strong>TLりんかん料金流し：</strong> サイトコントローラー（TLリンカーン）から最新の料金データを各サイトへ送信する。<br>
+                                ❸ <strong>新月ランキング登録：</strong> 延長した月に対して、新たにランキングの登録作業を行う。
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 対象主要サイト</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                TLリンカーンから一括で延長操作が可能なサイトは以下の通りです：<br>
+                                <ul class="list-disc pl-5 mt-1 space-y-0.5">
+                                    <li>じゃらん</li>
+                                    <li>楽天</li>
+                                    <li>一休</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/plan_extension.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/plan_extension2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/plan_extension3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-2. サイトのプラン延長（TLリンカーン操作手順） -->
+        <section id="lesson3-2" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">3-2</span>
+                    サイトのプラン延長（TLリンカーン操作手順）
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson3-2')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                サイトコントローラー（TLリンカーン）を使用して、じゃらん・楽天・一休などの各宿泊予約サイトのプラン販売期間を延長します。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① 基本操作フロー</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>メニュー遷移：</strong> 【TLりんかんログイン】 → 【各種設定】 → 【プランの販売期間延長】を選択する。</p>
+                                <p>❷ <strong>サイト選択：</strong> まずは【じゃらんnetのみ】にチェックを入れ、【選択対象のプランを表示】をクリックする。</p>
+                                <p>❸ <strong>プラン選択：</strong> 販売終了日を確認しながら、延長が必要なプランにチェックを入れていく。<br><small class="text-xs text-red-500 font-semibold block">※「セールプラン」「スペシャルウィーク」は延長不可のため注意。</small></p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 検索と一括延長のコツ</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>効率的な検索：</strong> 検索（F3ボタン）を使用して、現在の販売終了日（例：2027.04.30）を検索すると、漏れなくチェックが可能。</p>
+                                <p>❷ <strong>日付設定：</strong> ページ下部の【選択したプランの販売終了日を -年-月-日に延長します】に新しい期限（例：2027.05.31）を入力する。</p>
+                                <p>❸ <strong>実行：</strong> 【選択プランを延長して次のページへ】を押し、全ページ分（2ページ目以降も同様）を完了させる。</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ 他サイトへの展開</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ❶ <strong>順次実施：</strong> じゃらんの作業が完了したら、改めて【楽天のみ】、その後に【一休のみ】にチェックを入れ、同様の操作を繰り返す。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ranking_registration.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ranking_registration2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-3. TLリンカーン料金流し -->
+        <section id="lesson3-3" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">3-3</span>
+                    TLリンカーン料金流し（ランク一括設定）
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson3-3')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                プランの延長や追加を行った後、正しい料金ランクを各サイトへ反映させるための流し込み作業を行います。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① 料金ランク設定の手順</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>メニュー遷移：</strong> 【TLリンカーンの各種設定】 → 【カテゴリ④の料金ランク一括設定（カレンダー／日別）】 → 【ランク一括】を選択します。</p>
+                                <p>❷ <strong>検索：</strong> 【料金ランク設定のコピー】の項目にて、「プラン①」または「プラン②」を検索します。</p>
+                                <p>❸ <strong>コピー実行：</strong> 【日付：今月から】を選択し、一ヶ月ずつ検索して【コピーする】ボタンを押します。</p>
+                                <p>❹ <strong>送信：</strong> 【プラングループから活きているもの、調整するプラングループ】へ飛ばし、【送信して処理を続ける】をクリックします。</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 設定のサイクル</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>繰り返し作業：</strong> この操作を繰り返し行います。</p>
+                                <p>❷ <strong>スケジュール例：</strong> 現在が4月の場合は、翌年2月分まで料金を流し、3月分をプランランク登録として設定します。</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/rate_distribution.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/rate_distribution2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/rate_distribution3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3-4. 新月ランキング登録 -->
+        <section id="lesson3-4" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">3-4</span>
+                    新月ランキング登録（TLリンカーン・グロービア操作）
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson3-4')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                新しい月の販売に向けた料金ランキングの登録と、基幹システムへの反映手順です。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① TLリンカーンでの登録</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>❶ <strong>ランキング検索：</strong> 登録したい月を選択し、【料金ランク】からランキング検索を行ってカレンダーに添付します。</p>
+                                <p>❷ <strong>重要確認：</strong> 料金ランキングは自己判断で登録せず、<strong>必ず事前に上司に確認</strong>してから登録作業を行ってください。</p>
+                                <p>❸ <strong>送信：</strong> 【プラングループの選択】を行い、【送信して処理を続ける】をクリックします。</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② グロービアへの料金登録</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>基幹システム（グロービア）の全室状況表示に料金を反映させます：</p>
+                                <p>❶ <strong>メニュー遷移：</strong> 【事業所関連マスター】 → 【カレンダー】を選択します。</p>
+                                <p>❷ <strong>データ入力：</strong> TLリンカーンに入力した内容と同様に「R××」の形式で入力します。</p>
+                                <p>❸ <strong>確定：</strong> 内容を確認し、【更新】ボタンを押して完了です。</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ranking_registration.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/ranking_registration2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CATEGORY 4: 月次請求・宿泊税報告 (4番目に配置) ==================== -->
+        
+        <!-- 4-1. 水・ガス代請求書 -->
+        <section id="lesson4-1" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">4-1</span>
+                    水・ガス代請求書処理フロー（月初作業）
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson4-1')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">作業の概要</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                新月に入って、先月分の水道・ガス代の支払請求書が手元に届いたら、A4用紙にきれいに順番で貼り付け整理します。
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">貼り付け方法</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>・請求書が計5枚ある場合、金額が最も明確に記載されている「1枚目」を一番上にして重ねて貼付します。</p>
+                                <p class="text-xs bg-slate-100 dark:bg-slate-950 p-2 rounded-lg font-mono text-slate-500">
+                                    構成ルール：計3枚の台紙を用意し、[ 2枚 ＋ 2枚 ＋ 1枚 ] の順に重ねてきれいに貼付してください。
+                                </p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">PDFスキャンとメール送信</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1.5">
+                                <p>貼付が完了した請求台紙を<strong>１つのPDFファイル</strong>にまとめてスキャンし、メールにて送信します。</p>
+                                <p class="text-xs font-mono bg-blue-50 dark:bg-slate-950 p-2.5 rounded border dark:border-slate-800 leading-normal">
+                                    ・宛先（To）：<strong>Ayaka oya様 (oya@tkp.jp)</strong><br>
+                                    ・Cc：<strong>koga, kim, thisara, gihan</strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">ファイリング</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                メールデータ送信が完了したら、請求書の原本は最後にオフィス内の「ガス代」と書かれた指定のファイルに正しく綴じて保管してください。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大) [画像参照：image_7a10c5.png]
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/gas.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/gas2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4-2. 楽天トラベル宿泊税報告 -->
+        <section id="lesson4-2" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">4-2</span>
+                    楽天トラベル宿泊税報告の手続き
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson4-2')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">作業の概要とタイミング</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                毎月月初に、楽天トラベルの<strong>【ANA, JAL枠のみ】</strong>の宿泊税報告作業を行います。該当月に宿泊した対象人数と合計額を照らし合わせて正確に算出し、管理画面から確定させます。
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① 管理画面の検索フロー</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 space-y-1.5 leading-relaxed">
+                                <p>❶ <strong>楽天トラベルの管理画面へログイン</strong>します。</p>
+                                <p>❷ 【予約確認・キャンセル・変更】に遷移します。</p>
+                                <p>❸ 以下の条件フィルターを適用して検索を実行します：</p>
+                                <ul class="list-disc pl-5 text-xs text-slate-500 space-y-0.5">
+                                    <li>予約ステイタス：<strong>予約のみ</strong></li>
+                                    <li>予約経路：<strong>ANA ＋ JAL</strong></li>
+                                    <li>期間：<strong>前月1日〜30日（または31日）</strong></li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 金額・人数の検証ルール</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                データ確認は任意の方法で問題ありませんが、ミス防止のため<strong>「宿泊税が500円（高額）になっている対象」</strong>や、<strong>「泊数が長くなっている対象」</strong>について、必ず１件ずつ丁寧に確認を行ってください。
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ 精算報告・確定処理</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 space-y-1 leading-relaxed">
+                                <p>計算終了後、楽天トラベル管理画面から申請フォームを起ち上げ報告・確定します。</p>
+                                <p class="text-xs font-mono bg-blue-50 dark:bg-slate-950 p-2 rounded border dark:border-slate-800">
+                                    ・アクセス先： 【精算管理・その他】 ➜ 【宿泊税の申請】 ➜ 【宿泊税申請フォーム】
+                                </p>
+                                <p>申請フォームに算出した人数・金額を間違いなく入力・確認のうえ、【確定】ボタンを押して完了です。</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大) [画像参照：image_7a10c5.png]
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/rakuten.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/rakuten2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4-3. Lawsonお買物券支払明細 -->
+        <section id="lesson4-3" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">4-3</span>
+                    Lawsonお買物券支払明細書入力
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson4-3')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">作業の目的</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ダイレクトクラウド上に保存されている指定の「支払明細管理用エクセルシート」を開き、前月中にローソン枠で販売したお買物券の実績数を登録します。
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">アクセスパスと格納先</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 text-xs font-mono leading-relaxed">
+                                <p>ダイレクトクラウドを起動し、以下のルートでエクセルを開いて入力してください：</p>
+                                <span class="block bg-slate-100 dark:bg-slate-950 p-2.5 rounded-xl mt-1 text-blue-600 dark:text-blue-400 border dark:border-slate-800">
+                                    【ダイレクトクラウド】 ➜ 【共有】 ➜ 【経理部⇔宿泊事業部】 ➜ 【04.ローソンお買物券支払明細書】 ➜ 【202xxx (該当月)】
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大) [画像参照：image_7a10c5.png]
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Lawson.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CATEGORY 5: Salesforce操作 ==================== -->
+        
+        <!-- 5-1. SF キャンセルポリシー規定 -->
+        <section id="lesson5-1" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">5-1</span>
+                    SF キャンセルポリシー規定
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson5-1')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                Salesforce（SF）におけるキャンセル料の発生条件と料率は以下の通りです。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b border-slate-200 dark:border-slate-800">
+                            <th class="py-3 px-4 bg-slate-50/80 dark:bg-slate-950/40 font-bold text-slate-700 dark:text-slate-300">発生期間</th>
+                            <th class="py-3 px-4 bg-slate-50/80 dark:bg-slate-950/40 font-bold text-slate-700 dark:text-slate-300">キャンセル料率</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <td class="py-4 px-4 font-bold text-slate-700 dark:text-slate-300">ご利用日の14日〜8日前まで</td>
+                            <td class="py-4 px-4"><span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-md font-bold text-xs">20%</span></td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <td class="py-4 px-4 font-bold text-slate-700 dark:text-slate-300">ご利用日の7日〜2日前まで</td>
+                            <td class="py-4 px-4"><span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-md font-bold text-xs">50%</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-bold text-slate-700 dark:text-slate-300">前日・当日</td>
+                            <td class="py-4 px-4"><span class="bg-red-50 dark:bg-red-955/40 text-red-600 dark:text-red-400 px-2 py-1 rounded-md font-bold text-xs">100%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5-2. SF新規売上登録 -->
+        <section id="lesson5-2" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">5-2</span>
+                    SF新規売上登録
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson5-2')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                SFに新規売上登録のため必ずユニークコード必要です。フロント側売上立てる必要があるもの法人案件のみです。法人で予約あった場合ユニークコードあるものSFに登録します。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">❶ ユニークコード検索</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                まずTeams法人案件チャンネルからユニークコードコピーしてSFにログインし、<strong>OPP-から始まるユニークコード</strong>貼り付けて検索します。そこからその案件に繋がるSF案件出てきます。
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">❷ 案件選択フロー</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                案件に入ってそこから順番に選択して行きます。<br>
+                                <span class="text-xs bg-slate-50 dark:bg-slate-950 p-2 font-mono rounded-lg border dark:border-slate-800 block mt-1 leading-relaxed">
+                                    【予約確認】 → 【予約追加】 → 【利用種別/時間貸し・単日検索】もし泊数長い場合【時間貸し・複数日程検索】 → 【エリア・利用。時間設定不要・支店名－サンライフホテル】 → 【検索】 → 【施設の方にサンライフホテル出ます】 → 【オプションのみ予約】 → 【予約追加後に予約確認】
+                                </span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">❸ 複数日程の予約追加</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                予約追加上記通り行います、泊数３、４泊の場所上記パターン簡単です。もし以上の場所<br>
+                                <span class="text-xs bg-slate-50 dark:bg-slate-950 p-2 font-mono rounded-lg border dark:border-slate-800 block mt-1 leading-relaxed">
+                                    【時間貸し・複数日程検索】 → 【エリア・利用開始年月・利用終了年月・施設名】 → 【検索】 → 【オプションのみ予約のところにチェック】 → 【会場候補一覧／サンライフホテルにチェック】 → 【追加】 → 【会場予約へ】 → 【利用日にちチェックしてカートに追加】 → 【予約確認へ】
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">❹ オプション検索と必須3点</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                                <p>予約追加後にそれぞれオプション検索して行きます。予約人数と同じく入力して行きます。</p>
+                                <div class="bg-amber-50 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-900/30 rounded-xl p-3 text-xs">
+                                    <p class="font-bold text-amber-800 dark:text-amber-400 mb-1">【必ず追加していくもの】</p>
+                                    <ul class="list-disc pl-4 space-y-0.5 text-slate-600 dark:text-slate-400">
+                                        <li><strong>宿泊税</strong> 【200円か500円】</li>
+                                        <li><strong>朝食代</strong> 〈朝食付の場合のみ〉【1400円決まり】</li>
+                                        <li><strong>部屋代</strong> 〈部屋タイプ確認・税別案内した金額あってるか、追加する時喫煙、禁煙振り分けて入力すること〉</li>
+                                    </ul>
+                                </div>
+                                <p class="text-xs mt-2 text-slate-500 dark:text-slate-400">上記3点入力後に予約確認へボタン推して売価合計とホテルシステムと照らし合わせ行います。金額連れたら修正して業務行います。</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大) [画像参照：image_619d49.png]
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/sfsales.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/sfsales2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/sfsales3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5-3. SFコミッションの登録 -->
+        <section id="lesson5-3" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">5-3</span>
+                    SFコミッションの登録
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson5-3')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-950/20 font-semibold text-slate-600 dark:text-slate-400">① 作業の前提</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                法人お問い合わせから「予約コミッション付」で依頼が入った際に、コミッション計算を行ったのち、Salesforce上にコミッションを追加・登録する手順です。<br>
+                                <small class="text-xs text-slate-400 block mt-1">※案内時の詳細な全体の流れは <strong>Lesson 6.2</strong> に詳しく書いてありますのでご参照ください。</small>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② SF売上入力と10%割引適用</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 space-y-2">
+                                <p>エクセルで計算して算出された金額【コミッション付】をSF案件（商談商品明細）側に入力します：</p>
+                                <p>❶ 普通通りに宿泊税、部屋室料、朝食（※朝食付の場合のみ）を追加します。</p>
+                                <p>❷ 追加後、<strong>【割引編集】 ➜ 【個別割引を10%にします】 ➜ 【保存】 ➜ 【予約確認へ】</strong>を選択します。</p>
+                                <div class="bg-red-50 dark:bg-red-955/20 border border-red-200/50 dark:border-red-900/30 rounded-xl p-3 text-xs text-red-800 dark:text-red-400 font-bold">
+                                    ⚠️ 超重要ルール：個別割引は室料のみ適用です。朝食代にコミッションつけないです。
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ システム金額照合と保存</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                予約確認画面に遷移し、<strong>SF上の売価合計</strong>と、<strong>Glovia（ホテル基幹システム）の合計金額</strong>をしっかりと照らし合わせ、完全に合致しているか確認してください。<br>
+                                金額が合っていれば、右下の<strong>【次へ】</strong>ボタンを押して保存を完了させます。<br><br>
+                                <span class="bg-amber-100 dark:bg-amber-955/40 text-amber-800 dark:text-amber-400 font-bold text-xs p-1 rounded">※注意：保存忘れに注意してください。じゃないと営業から確認取れない。</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大) [画像参照：image_7a10c5.png]
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/komition.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5-4. 新規顧客・担当者登録 -->
+        <section id="lesson5-4" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">5-4</span>
+                    新規顧客・担当者登録
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson5-4')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                検索で一致するデータがなかった場合、新規に「取引先（会社情報）」および「取引先責任者（担当者）」を登録します。会社名、住所、電話番号、部署、メールアドレス等の必須項目を入力し、すべての情報を紐づけてSalesforce上に正確に保存してください。
+            </p>
+        </section>
+
+        <!-- 5-5. 案件作成・売上登録 -->
+        <section id="lesson5-5" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">5-5</span>
+                    案件作成・売上登録
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson5-5')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                確定した取引や売掛対象の宿泊プラン等に対して、「商談」レコードを作成して案件管理を行います。商談が確定したらフェーズを「受注」に変更し、実際の実績（売上商品明細：室料、朝食代など）を登録して請求金額にズレがないことを確認します。
+            </p>
+        </section>
+
+        <!-- 5-6. 売上内容の変更・取消 -->
+        <section id="lesson5-6" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">5-6</span>
+                    売上内容の変更・取消
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson5-6')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                確定済みの売上に対してキャンセルや金額変更があった場合、経理締め前であればレコードを直接編集して修正可能です。すでに月次締め処理が完了した過去月データに関しては直接変更せず、当月付で「赤商談（マイナス商談）」を起票して調整を行ってください。
+            </p>
+        </section>
+
+        <!-- 5-7. 見積書の発行方法 -->
+        <section id="lesson5-7" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">5-7</span>
+                    見積書の発行方法
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson5-7')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                商談画面の「見積作成」ボタンより見積書PDFが自動生成可能です。宛先・振込銀行・金額等の記載内容がプレビューで一致していることを確認後、商談の添付ファイル領域へ保存・出力し、クライント等へ安全に送付します。
+            </p>
+        </section>
+
+        <!-- ==================== CATEGORY 6: 法人案件・社内利用 ==================== -->
+        
+        <!-- 6-1. 社内利用の手続き -->
+        <section id="lesson6-1" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">6-1</span>
+                    社内利用の手続き
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson6-1')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                Teamsのお問い合わせ後に予約の立て方を確認し、グロービア予約・TLリンカーン調整・Teams報告まで対応します。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① Teams確認</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                Teams【宿泊事業部】チャンネルの <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-mono font-bold text-xs">help-社内利用予約通知</span> にお問い合わせがあるか確認します。<br>
+                                <span class="bg-amber-50 dark:bg-amber-955/20 text-amber-800 dark:text-amber-400 px-2 py-0.5 rounded font-bold text-xs mt-1 inline-block">※ホテル名「TKPサンライフホテル」からお問い合わせがあれば予約対応が必要です。</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② TLリンカーン調整</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                TLリンカーンの残室調整を行います。
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ グロービア予約登録</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>グロービアの予約画面を開き、普通予約で部屋を押さえます。</p>
+                                <p class="pl-4 text-xs font-mono text-slate-500 dark:text-slate-400 leading-relaxed">
+                                    ・経路（1）の代理店CD： <strong>TKPS</strong><br>
+                                    ・支払1枚目： <strong>CA → CH</strong> に変更<br>
+                                    ・請求先CD： <strong>32（TKP利用）</strong><br>
+                                    ・利用： <strong>ホテル税計上「計上する」→「計上しない」</strong> に変更
+                                </p>
+                                <p class="mt-2 text-xs font-bold text-slate-600 dark:text-slate-400">上記変更後に更新し、メモ欄へ以下を必ず入力してください。</p>
+                                <span class="bg-amber-100 dark:bg-amber-955/40 text-amber-800 dark:text-amber-300 px-2.5 py-1 rounded-lg font-mono font-bold text-xs inline-block mt-1">【TKP社内利用 売掛8000円入力お願いします】</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">④ Teams報告</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                Teamsでお問い合わせした方をメンションし、予約番号と一緒に完了報告を行います。
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">⑤ 注意事項</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                                <p>・TKP社員利用のため、役員対応・タイプアップ・朝食券対応なども行います。</p>
+                                <p>・チェックイン時は <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-bold text-xs">レジカード不要</span> です。<br>挨拶・カードキー・朝食券のお渡し、ご案内のみで対応可能です。</p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">⑥ 子会社利用について</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+                                <p>子会社利用の場合も、宿泊フォームからお問い合わせが入ります。</p>
+                                <p>その場合は <span class="text-blue-600 dark:text-blue-400 font-bold">20％オフ</span> でご案内します。<br>支払いは <span class="text-blue-600 dark:text-blue-400 font-bold">現地払い</span> です。</p>
+                                <p class="text-xs text-slate-400 mt-2 font-bold">※支払方法・請求先CD変更不要 / ※メモ入力は忘れず行ってください。</p>
+                                <div class="mt-3 p-3 bg-slate-50 dark:bg-slate-955/40 rounded-xl border border-slate-100 dark:border-slate-850">
+                                    <p class="font-bold text-xs text-slate-600 dark:text-slate-400">【当社子会社一覧】</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs mt-1.5 text-slate-500 dark:text-slate-400">
+                                        <div>・株式会社ノバレーゼ</div>
+                                        <div>・株式会社リリカラ</div>
+                                        <div>・株式会社DO</div>
+                                        <div>・株式会社マリーマーブル</div>
+                                        <div>・株式会社タイムレス</div>
+                                        <div>・株式会社ブロスダイニング</div>
+                                        <div>・株式会社花乃店千樹園</div>
+                                        <div>・株式会社アンドユー</div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">⑦ 子会社特別対象分</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                インターメディア,株式会社TKPビズオフィズは <span class="font-bold text-blue-600 dark:text-blue-400">TKP100％子会社</span> のため、TKP社員と同様に福利厚生・TKP社内利用が可能です。<br><br>
+                                ただし、社内ポータルへアクセスできないため、音響レンタル事業部の <span class="font-bold text-slate-900 dark:text-white">大野さん</span> が窓口となり各拠点へ問い合わせを行います。<br>
+                                そのため、TKP社内利用時の連絡先は大野さんになります。<br><br>
+                                福利厚生は <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-bold text-xs">当日30％引き</span> でご案内してください。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Employeeuse.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Employeeuse2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Employeeuse3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Employeeuse4.jpg" alt="画像4" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Employeeuse5.jpg" alt="画像5" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6-2. 法人案件の手続き -->
+        <section id="lesson6-2" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">6-2</span>
+                    法人案件の手続き
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson6-2')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <p class="text-sm text-slate-500 dark:text-slate-400 mb-5 leading-relaxed">
+                Teamsのお問い合わせ後に予約の立て方を確認し、空室案内・ホテルシステム登録・Salesforce登録まで対応します。
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">① Teams確認</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ◎ Teams【宿泊事業部】チャンネルの <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-mono font-bold text-xs">help-法人利用予約通知</span> に問い合わせがあるか確認します。<br><br>
+                                お問い合わせカテゴリは以下の2種類です。<br>
+                                ・1. 空室確認<br>
+                                ・2. 予約
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 問合せ区分：空室確認</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                                <p>⓵ <strong>グロービア予約不要</strong><br>残室状況表示を見ながら空室・料金をご案内します。<br><span class="bg-amber-100 dark:bg-amber-955/40 text-amber-800 dark:text-amber-300 px-1.5 py-0.5 rounded font-bold text-xs">※必ず税別で案内します。</span></p>
+                                <div class="pl-4 border-l-2 border-slate-200 dark:border-slate-850">
+                                    <p><strong>【料金案内例】</strong></p>
+                                    <p>残室状況表示：11,000円の場合 ➜ <span class="text-blue-600 dark:text-blue-400 font-bold">11,000円【税別】</span><br>
+                                    <small class="text-xs text-slate-400 block mt-1">※割り切れない場合は100円単位で調整します。<br>例：12,000円 ÷ 1.1 = 10,910円 → 10,900円【税別】</small></p>
+                                    <p class="mt-2">朝食料金： <span class="text-blue-600 dark:text-blue-400 font-bold">1,400円【税別】</span><br><small class="text-xs text-slate-400">※朝食料金は固定です。</small></p>
+                                </div>
+                                <p class="mt-2">空室がある場合はチャットで以下のように案内します。<br><span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-md font-mono font-bold text-xs inline-block mt-1">11,000円【税別】＋ 1,400円【税別】＋ 200円【宿泊税】 ＝ 13,840円【税込】</span></p>
+                                <p class="text-xs text-slate-400">※税別・税込を分けてチャット案内します。</p>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ コミッション案件</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                問合せフォームに <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-bold text-xs">「代理店：コミッション」</span> と記載がある場合は料金を上げて案内します。<br><br>
+                                例：残室状況表示 11,000円の場合<br>
+                                ・税別料金に変換して案内<br>
+                                ・朝食代は <span class="text-blue-600 dark:text-blue-400 font-bold">1,400円【税別】</span> （朝食にはコミッション無し）<br><br>
+                                コミッション計算エクセルに「11000円」の税込料金を入力し、コピー用枠をチャットへ貼り付けて送信します。
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">④ 問合せ区分：予約</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                                <p>❶ <strong>ホテルシステム予約が必要</strong></p>
+                                <p>① TLリンカーン調整を行います。</p>
+                                <p>② グロービア予約画面を開き、普通予約で押さえます。</p>
+                                <p class="pl-4 text-xs font-mono text-slate-500 dark:text-slate-400 leading-relaxed">
+                                    ・種別： <strong>団体</strong><br>
+                                    ・団体名： <strong>漢字＋カナ</strong><br>
+                                    ・経路（1）の代理店CD： <strong>TKPOU</strong><br>
+                                    ・支払1枚目： <strong>CA → CH</strong> に変更<br>
+                                    ・振替条件： <strong>BP</strong><br>
+                                    ・請求先CD： <strong>13（TKP OUT）</strong>
+                                </p>
+                                <p>予約後は必ず <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-mono font-bold text-xs">OPPから始まる法人案件番号</span> をメモします。<br>【法人案件 OPP-xxxxxx】</p>
+                                <p>③ Salesforceへ登録します。</p>
+                                <p>④ Teamsで問い合わせした方をメンションし、予約番号と一緒に完了報告します。</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">⑤ 予約＋コミッション案件</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed space-y-2">
+                                <p>❷ 問合せフォームに <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-bold text-xs">代理店：コミッション</span> と書かれている場合</p>
+                                <p>① コミッション計算エクセルを使用します。</p>
+                                <p class="pl-4 text-xs text-slate-500 dark:text-slate-400 border-l-2 border-slate-200">
+                                    例：残室状況表示 11,000円の場合<br>
+                                    ・税別で案内<br>
+                                    ・朝食代は <strong>1,400円【税別】</strong><br>
+                                    ・朝食にはコミッション無し
+                                </p>
+                                <p>コミッション計算エクセルに「11000円」を入力し、コピー枠をチャットへ貼り付けて送信します。</p>
+                                <p>② Salesforce登録時は、計算エクセルの金額をそのまま入力し、割引欄を <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded font-bold text-xs">部屋室料10％</span> に設定して登録します。</p>
+                                <p>③ グロービア金額も、計算エクセル確認後に登録します。</p>
+                                <p>④ Teamsで問い合わせした方をメンションし、予約番号と一緒に報告します。</p>
+                                <p class="text-xs text-red-500 font-bold">※宿泊税（200円 または 500円）が別途追加になることも必ず案内してください。</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大)
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Corporatecase.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Corporatecase2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Corporatecase3.jpg" alt="画像3" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Corporatecase4.jpg" alt="画像4" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Corporatecase5.jpg" alt="画像5" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Corporatecase6.jpg" alt="画像6" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6-3. 株式会社HANA TOUR -->
+        <section id="lesson6-3" class="lesson-card bg-white dark:bg-slate-900 p-6 md:p-8 rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] border border-slate-100 dark:border-slate-800/80 relative theme-transition overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-5 mb-6 gap-4">
+                <h3 class="text-lg md:text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                    <span class="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-955/40 border border-blue-100/50 dark:border-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-sm font-mono">6-3</span>
+                    株式会社HANA TOUR（ハナツアー）対応
+                </h3>
+                <button class="print-btn inline-flex items-center gap-2 px-3.5 py-2 bg-slate-50 dark:bg-slate-955 border border-slate-200/80 dark:border-slate-800 text-xs font-bold rounded-lg text-slate-600 dark:text-slate-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 dark:hover:text-white transition-all shadow-sm" onclick="printSection('lesson6-3')">
+                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> この項目のみ印刷
+                </button>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left mb-6">
+                    <tbody>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="w-1/4 py-4 px-4 bg-slate-50/50 dark:bg-slate-950/20 font-semibold text-slate-600 dark:text-slate-400">① 問い合わせ対応時の原則</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 leading-relaxed">
+                                株式会社HANA TOURから法人契約の予約お問い合わせが来たら、契約料金表をよく確認しながらご案内をします。<br>
+                                <span class="bg-blue-50 dark:bg-blue-955/40 text-blue-600 dark:text-blue-400 px-1.5 py-0.5 rounded font-bold text-xs inline-block mt-1">金額のご案内は基本不要です。空室状況の確認・案内のみで対応完了となります。</span>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-slate-100 dark:border-slate-800/40">
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">② 例：平日予約時のSF登録ルール</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300 space-y-1.5 leading-relaxed">
+                                <p><strong>【例：平日予約時】</strong></p>
+                                <ul class="list-disc pl-5 text-xs text-slate-600 dark:text-slate-400 space-y-1">
+                                    <li><strong>部屋室料：</strong> 10,000円 【税別】 ➜ コミッション 10%</li>
+                                    <li><strong>朝食代：</strong> 1,400円 【税別】</li>
+                                    <li><strong>宿泊税：</strong> 200円</li>
+                                </ul>
+                                <div class="bg-amber-50 dark:bg-amber-955/20 border border-amber-200/50 dark:border-amber-900/30 rounded-xl p-3 text-xs text-amber-800 dark:text-amber-400 leading-normal">
+                                    ⚠️ 宿泊税の登録ルール：<br>
+                                    宿泊税は、Salesforce（SF）上に必ず登録する必要があります。<br>
+                                    ただし、<strong>宿泊税の支払いは「現地払い」</strong>となります。当日の現地支払が完了したら、SFに忘れずに<strong>入金登録</strong>を行ってください。
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="py-4 px-4 bg-slate-50/50 dark:bg-slate-955/20 font-semibold text-slate-600 dark:text-slate-400">③ PMS（グロービア）の入力</th>
+                            <td class="py-4 px-6 text-slate-700 dark:text-slate-300">
+                                ホテルシステム（Glovia）に入力する際は、あらかじめ<strong>コミッション計算Excel</strong>を使用して逆算をかけ、その計算結果に合わせてグロービア上に正確に予約を立てます。
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 画像ギャラリー -->
+            <div class="img-container mt-6">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 mb-2.5 block flex items-center gap-1.5">
+                    <i data-lucide="image" class="w-3.5 h-3.5"></i> 関連画像 (クリックで拡大) [画像参照：image_7a10c5.png]
+                </span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Hana.jpg" alt="画像1" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-xl border border-slate-200/60 dark:border-slate-800">
+                        <img src="images/Hana2.jpg" alt="画像2" class="cursor-zoom-in group-hover:scale-102 transition-transform duration-200 shadow-sm w-full h-auto">
+                        <div class="absolute top-2 right-2 bg-black/60 p-1.5 rounded-lg text-white pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // DOMの読み込み完了時
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lucideアイコンのレンダリング
+            lucide.createIcons();
+
+            // ==================== ダークモード・ライトモード切り替えシステム ====================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+
+            // ==================== モバイルナビゲーション操作 ====================
+            const mobileMenuBtn = document.getElementById('mobile-nav-toggle');
+            const mobileMenuCloseBtn = document.getElementById('mobile-nav-close');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+            const menuLinks = document.querySelectorAll('.menu-link');
+
+            function openMobileMenu() {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            }
+
+            function closeMobileMenu() {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+
+            mobileMenuBtn.addEventListener('click', openMobileMenu);
+            mobileMenuCloseBtn.addEventListener('click', closeMobileMenu);
+            overlay.addEventListener('click', closeMobileMenu);
+            
+            // メニューリンククリック時にモバイルならドロワーを自動で閉じる
+            menuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 1024) {
+                        closeMobileMenu();
+                    }
+                });
+            });
+
+            // ==================== インクリメンタルリアルタイム検索機能 ====================
+            const searchInput = document.getElementById('manual-search');
+            const searchClearBtn = document.getElementById('search-clear');
+            const lessonCards = document.querySelectorAll('.lesson-card');
+            const noResultsView = document.getElementById('no-results-view');
+            const totalCountSpan = document.getElementById('total-card-count');
+            const searchCountSpan = document.getElementById('search-count');
+            const sidebarDetails = document.querySelectorAll('#sidebar-menu-list details');
+
+            totalCountSpan.textContent = lessonCards.length;
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim().toLowerCase();
+                let matchCount = 0;
+
+                if (query.length > 0) {
+                    searchClearBtn.classList.remove('hidden');
+                } else {
+                    searchClearBtn.classList.add('hidden');
+                }
+
+                lessonCards.forEach(card => {
+                    const textContent = card.innerText.toLowerCase();
+                    const sidebarLink = document.querySelector(`a[href="#${card.id}"]`);
+
+                    if (textContent.includes(query)) {
+                        card.classList.remove('hidden');
+                        matchCount++;
+                        if (sidebarLink) {
+                            sidebarLink.classList.remove('opacity-30');
+                            sidebarLink.classList.add('text-blue-500', 'font-semibold', 'bg-slate-800/30');
+                            let parentDetails = sidebarLink.closest('details');
+                            if (parentDetails) {
+                                parentDetails.setAttribute('open', '');
+                            }
+                        }
+                    } else {
+                        card.classList.add('hidden');
+                        if (sidebarLink) {
+                            sidebarLink.classList.add('opacity-30');
+                            sidebarLink.classList.remove('text-blue-500', 'font-semibold', 'bg-slate-800/30');
+                        }
+                    }
+                });
+
+                if (query.length > 0) {
+                    searchCountSpan.innerHTML = `検索結果: <span class="text-blue-600 dark:text-blue-400 font-bold">${matchCount}</span> / ${lessonCards.length} 件`;
+                    if (matchCount === 0) {
+                        noResultsView.classList.remove('hidden');
+                        noResultsView.classList.add('flex');
+                    } else {
+                        noResultsView.classList.add('hidden');
+                        noResultsView.classList.remove('flex');
+                    }
+                } else {
+                    searchCountSpan.innerHTML = `全 <span id="total-card-count">${lessonCards.length}</span> 項目`;
+                    noResultsView.classList.add('hidden');
+                    menuLinks.forEach(link => {
+                        link.classList.remove('opacity-30', 'text-blue-500', 'font-semibold', 'bg-slate-800/30');
+                    });
+                }
+            });
+
+            searchClearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.focus();
+            });
+
+            // ==================== 【バグ修正】高精度サイドバーリンク連動システム ====================
+            let isManualScrolling = false;
+            const observerOptions = {
+                root: null,
+                rootMargin: '-10% 0px -70% 0px', // 画面上部付近の狭いエリアを横切った瞬間に切り替える
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                if (isManualScrolling) return;
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        menuLinks.forEach(link => {
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('text-white', 'border-blue-500', 'bg-blue-600/10');
+                                link.classList.remove('text-slate-400');
+                                
+                                let detailsParent = link.closest('details');
+                                if (detailsParent && !detailsParent.hasAttribute('open')) {
+                                    sidebarDetails.forEach(det => {
+                                        if (det !== detailsParent) det.removeAttribute('open');
+                                    });
+                                    detailsParent.setAttribute('open', '');
+                                }
+                            } else {
+                                link.classList.remove('text-white', 'border-blue-500', 'bg-blue-600/10');
+                                link.classList.add('text-slate-400');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            lessonCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // サイドバーリンクがクリックされた場合のスクロールミュート
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    isManualScrolling = true;
+                    menuLinks.forEach(l => {
+                        l.classList.remove('text-white', 'border-blue-500', 'bg-blue-600/10');
+                        l.classList.add('text-slate-400');
+                    });
+                    this.classList.add('text-white', 'border-blue-500', 'bg-blue-600/10');
+                    this.classList.remove('text-slate-400');
+
+                    setTimeout(() => {
+                        isManualScrolling = false;
+                    }, 800);
+                });
+            });
+
+            sidebarDetails.forEach(details => {
+                details.querySelector('summary').addEventListener('click', (e) => {
+                    setTimeout(() => {
+                        if (details.hasAttribute('open')) {
+                            sidebarDetails.forEach(otherDetails => {
+                                if (otherDetails !== details) {
+                                    otherDetails.removeAttribute('open');
+                                }
+                            });
+                        }
+                    }, 50);
+                });
+            });
+
+            // ==================== HIGH-QUALITY USER IMAGE ZOOM MODAL SYSTEM ====================
+            const modal = document.getElementById('img-modal');
+            const modalContent = document.getElementById('modal-content');
+
+            document.querySelectorAll('img.cursor-zoom-in').forEach(img => {
+                img.addEventListener('click', function() {
+                    modalContent.innerHTML = `<img src="${this.src}" alt="${this.alt || 'Zoomed'}" class="max-w-[90vw] max-h-[80vh] rounded-xl shadow-2xl object-contain">`;
+                    modal.classList.remove('opacity-0', 'pointer-events-none');
+                    modal.classList.add('opacity-100', 'pointer-events-auto');
+                    document.body.classList.add('overflow-hidden');
+                });
+            });
+
+            modal.addEventListener('click', () => {
+                modal.classList.remove('opacity-100', 'pointer-events-auto');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                document.body.classList.remove('overflow-hidden');
+            });
+        });
+
+        // ==================== ADVANCED INDIVIDUAL PRINT SYSTEM ====================
+        function printSection(id) {
+            const cards = document.querySelectorAll(".lesson-card");
+            
+            cards.forEach(card => { 
+                card.classList.remove("printing"); 
+            });
+            
+            const selected = document.getElementById(id);
+            if (selected) {
+                selected.classList.add("printing");
+                window.print();
+            }
+        }
+    </script>
+</body>
+</html>
